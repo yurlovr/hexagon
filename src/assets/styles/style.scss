@@ -1,12 +1,54 @@
 #app {
-  background-color: red;
+  // background-color: red;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+
 ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 li {
   margin: 0;
   padding: 0;
+}
+
+button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+button + button {
+  margin-left: 50px;
+}
+
+input {
+  outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border: 1px solid gray;
+  border-radius: 20px;
+  padding: 30px;
+  min-height: 350px;
+}
+.header {
+  margin-bottom: 50px;
 }

@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <HexField/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HexField from './components/HexField.vue'
+// import HexField from './components/HexField.vue'
 
 export default {
   name: 'App',
   components: {
-    HexField
+    // HexField
   }
 }
 </script>
