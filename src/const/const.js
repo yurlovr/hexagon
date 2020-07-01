@@ -42,6 +42,10 @@ export const SELECT_MODE_HEADER = 'Выберите режим ввода дан
 
 export const AUTO_MODE_HEADER = 'Возможная вероятность единицы'
 
-// export const HEADER_TEXT = {
-//   HAND: ''
-// }
+export const HEADER_TEXT = {
+  HAND: 'Введите размеры сетки',
+  AUTO: 'Введите вероятность появления 1',
+  HEX_FIELD: 'Размеры L: getParamL M: getParamM N: getParamN'
+}
+
+export const REQUIRED_FIELD = 'Обязательное поле'

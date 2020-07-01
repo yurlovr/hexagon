@@ -79,7 +79,7 @@ export default {
     }
   .error {
     position: absolute;
-    bottom: -6%;
+    bottom: 10%;
     left: 14%;
     padding-left: 20px;
     color:#D9457C;

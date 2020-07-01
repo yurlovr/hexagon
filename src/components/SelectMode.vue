@@ -16,7 +16,7 @@
 
 <script>
 import BButon from './BButton'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { BUTTON_LABEL, SELECT_MODE_HEADER } from '../const/const'
 
 export default {
@@ -30,9 +30,24 @@ export default {
       SELECT_MODE_HEADER
     }
   },
+  mounted() {
+    if (this.getHeaderText || this.getGoMainPage) {
+      this.setDefaultState()
+    }
+  },
+  computed: {
+    ...mapGetters('ui', [
+      'getHeaderText',
+      'getGoMainPage',
+    ])
+  },
   methods: {
     ...mapActions('app', [
       'setMode'
+    ]),
+    ...mapActions('ui', [
+      'setHeaderText',
+      'setDefaultState'
     ]),
     selectMode(event) {
       const target = event.target.id

@@ -1,30 +1,35 @@
 <template>
-  <section class="container">
-    <h1 class="header">
-      {{AUTO_MODE_HEADER}}
-    </h1>
-    <IInput :label="INPUT_LABEL.PROBABILITY.label"
-            :placeholder="INPUT_LABEL.PROBABILITY.placeholder"
-            :type="number"
-    />
-    <BButton :label="BUTTON_LABEL.AUTO"
-              :disables="false"
-              :onClick="setProbability"
+  <div>
+    <Header />
+    <section class="container">
+      <h1 class="header">
+        {{AUTO_MODE_HEADER}}
+      </h1>
+      <IInput :label="INPUT_LABEL.PROBABILITY.label"
+              :placeholder="INPUT_LABEL.PROBABILITY.placeholder"
+              :type="number"
+      />
+      <BButton :label="BUTTON_LABEL.AUTO"
+                :disabled="buttonDisabled()"
+                :onClick="setProbability"
 
-    />
-  </section>
+      />
+    </section>
+  </div>
 </template>
 
 <script>
 import IInput from './IInput'
 import BButton from './BButton'
+import Header from './Header'
 import { BUTTON_LABEL, INPUT_LABEL, AUTO_MODE_HEADER } from '../const/const'
 
 export default {
   name: 'AutoMode',
   components: {
     BButton,
-    IInput
+    IInput,
+    Header
   },
   data() {
     return {
@@ -36,6 +41,9 @@ export default {
   methods: {
     setProbability() {
       console.log()
+    },
+    buttonDisabled() {
+      return true
     }
   }
 }
@@ -44,6 +52,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   justify-content: center;
+  margin-top: 50px;
 }
 
 </style>

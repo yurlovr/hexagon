@@ -1,15 +1,29 @@
 <template>
   <section class="field">
     <Header />
-    <div class="wrapper" :style="{'min-width': 35 * (getParamN + getParamM) + 'px'}">
-      <div v-for="(row, index) in test()"
-          :key="index"
-          class="hex_row"
-          :class="{'first': index}">
-        <Hex v-for="item in row"
-            :key="item"
-            :item="item"
-            :onClick="clickToHex"/>
+    <div class="wrapper">
+      <div class="stat">
+        <p class="total">
+          Количество ячеек в решетке: <span>{{getTotalCountCells}}</span>
+        </p>
+        <p class="total">
+          Количество доменов (яцейки с 1): <span>{{getTotalAmountHex && getTotalAmountHex}}</span>
+        </p>
+        <p class="total">
+          Количество односвязных доменов(одинакового цвета): <span>{{getDiffrentDomen()}}</span>
+        </p>
+      </div>
+      <div class="hex_field">
+        <div v-for="(row, index) in getHexArray"
+            :key="index"
+            class="hex_row"
+            :class="{'first': index}">
+          <Hex v-for="item in row"
+              :key="item ? item.id : getKey()"
+              :id="item && item.id"
+              :item="item && item"
+              :onClick="clickToHex"/>
+        </div>
       </div>
     </div>
   </section>
@@ -18,7 +32,8 @@
 <script>
 import Hex from './Hex'
 import Header from './Header'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+const cryptoRandomString = require('crypto-random-string')
 
 export default {
   name: 'HexField',
@@ -34,85 +49,39 @@ export default {
     ...mapGetters('params', [
       'getParamL',
       'getParamM',
-      'getParamN'
-    ])
+      'getParamN',
+      'getHexArray',
+      'getTotalAmountHex',
+      'getTotalHexColor'
+    ]),
+    getTotalCountCells: {
+      get () {
+        return this.getHexArray.reduce((summ, current) => {
+          return summ + current.filter(Boolean).length
+        }, 0)
+      }
+    }
   },
   methods: {
-    clickToHex(event) {
-      const id = event.currentTarget.id
-      console.log(id)
+    ...mapActions('params', [
+      'setCheckHex'
+    ]),
+    getKey() {
+      return cryptoRandomString({length: 5})
     },
-    test() {
-      // Всего строк  m + l - 1
-      // верхний блок  - смещение в лево на l
-      // средний блок - смещение в право m - 
-      let result = []
-      const l = +this.getParamL
-      const m = +this.getParamM
-      const n = +this.getParamN
-      let d = l
-      let counter = 1
-      let nullElement = 0
-      let prevLength = 0
-      const maxLength = l > m ? l : m;
-      const minLength = l > m ? m : l;
-      // верхний блок
-      console.log("TOP")
-      for (let i = 1; i <= l; i ++) {
-        let array = []
-        for (let j = 1; j < n + l; j++) {
-          if (i !== l && j < d) {
-            array.push(null)
-          } else {
-            array.push(counter++)
-          }
+    getDiffrentDomen() {
+      return Object.keys(this.getTotalHexColor).length
+    },
+    clickToHex(item) {
+      // const id = event.currentTarget.id
+      if (item.check) return
+      this.setCheckHex({
+        data: {
+          ...item,
+          check: 1 // item.check ? 0 : 1
         }
-        d--
-        if (i < n + l) {
-        prevLength = array.length
-        console.log(prevLength)
-      }
-        console.log(array)
-        result.push(array)
-    }
-    console.log("MIDDLE")
-    let middleLimit = m ? maxLength - minLength : 0
-    for (let i = 1; i <= middleLimit; i++) {
-      let middleArray = []
-      for (let j = 0; j < n + l + nullElement; j++) {
-        if (j <= nullElement) {
-          middleArray.push(null)
-        } else {
-          middleArray.push(counter++)
-        }
-      }
-      console.log("array", middleArray)
-      nullElement++
-      result.push(middleArray)
-      if (i === middleLimit) {
-        prevLength = middleArray.length
-        console.log(prevLength)
-      }
-    }
-    console.log("BOTTOM")
-    const bottomLimit = l ? maxLength - Math.abs(m - l) : 0
-    console.log("bottomLimit", bottomLimit)
-    for (let i = 1; i < bottomLimit; i++) {
-      let array = []
-      for (let j = 0; j < prevLength; j++) {
-        if (j <= nullElement) {
-          array.push(null)
-        } else {
-          array.push(counter++)
-        }
-      }
-      nullElement++
-      console.log("array", array)
-      result.push(array)
-    }
-      console.log(result)
-      return result
-    }
+      })
+    },
   }
 }
 </script>
@@ -121,12 +90,25 @@ export default {
 .field {
   min-height: 500px;
   margin: 0 auto;
-  background-color: antiquewhite;
 }
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
   margin: 0 auto;
   margin-top: 50px;
   padding-top: 20px;
+}
+.stat {
+  margin-bottom: 50px;
+}
+.total {
+  text-align: left;
+  font-size: 20px;
+  & > span {
+    font-weight: bold;
+  }
 }
 .first {
   margin-top: -14px;

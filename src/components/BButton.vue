@@ -65,6 +65,7 @@ export default {
   &[disabled] {
     background-color: grey;
     color: #FFFFFF;
+    cursor: default;
     &:hover {
       box-shadow: 3px 5px 7px 3px rgba(0, 0, 0, 0.2);
     }

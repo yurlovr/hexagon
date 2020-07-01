@@ -12,6 +12,6 @@ export default {
     SET_RENDER_HEX_FIELD: () => {}
   },
   getters: {
-    getMode: state => state.mode,
+    getMode: state => state.mode
   }
 }

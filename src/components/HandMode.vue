@@ -6,22 +6,26 @@
             :type="'number'"
             :placeholder="INPUT_LABEL.L.placeholder"
             :value="+getParamL"
+            :errorText="REQUIRED_FIELD"
             v-model="paramL"
     />
     <IInput :label="INPUT_LABEL.M.label"
             :type="'number'"
             :placeholder="INPUT_LABEL.M.placeholder"
             :value="+getParamM"
+            :errorText="REQUIRED_FIELD"
             v-model="paramM"
     />
     <IInput :label="INPUT_LABEL.N.label"
             :type="'number'"
             :placeholder="INPUT_LABEL.N.placeholder"
             :value="+getParamN"
+            :errorText="REQUIRED_FIELD"
             v-model="paramN"
     />
     <BButton  :label="BUTTON_LABEL.START"
               :onClick="buildHexField"
+              :disabled="buttonDisabled()"
     />
   </form>
 </div>
@@ -31,7 +35,7 @@
 import BButton from './BButton'
 import IInput from './IInput'
 import Header from './Header'
-import { BUTTON_LABEL, INPUT_LABEL } from '../const/const'
+import { BUTTON_LABEL, INPUT_LABEL, REQUIRED_FIELD } from '../const/const'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -44,15 +48,20 @@ export default {
   data () {
     return {
       BUTTON_LABEL,
-      INPUT_LABEL
+      INPUT_LABEL,
+      REQUIRED_FIELD
     }
   },
-    created() {
+  created() {
     if (!this.getMode) {
       this.setMode({
         data: 'hand'
       })
-      // сбросить параметры на default
+    }
+  },
+  mounted() {
+    if (this.getParamL || this.getParamM || this.getParamN) {
+      this.setDefaultState({})
     }
   },
   computed: {
@@ -69,8 +78,9 @@ export default {
         return this.getParamL
       },
       set (val) {
+        const value = this.setValue(val)
         this.setParamL({
-          data: val
+          data: value
         })
       }
     },
@@ -79,8 +89,9 @@ export default {
         return this.getParamM
       },
       set (val) {
+        const value = this.setValue(val)
         this.setParamM({
-          data: val
+          data: value
         })
       }
     },
@@ -89,8 +100,9 @@ export default {
         return this.getParamN
       },
       set (val) {
+        const value = this.setValue(val)
         this.setParamN({
-          data: val
+          data: value
         })
       }
     },
@@ -99,7 +111,8 @@ export default {
     ...mapActions('params', [
       'setParamL',
       'setParamM',
-      'setParamN'
+      'setParamN',
+      'setDefaultState'
     ]),
     ...mapActions('app', [
       'setRenderHexField',
@@ -108,10 +121,21 @@ export default {
     buildHexField(event) {
       event.preventDefault()
       this.setRenderHexField()
+    },
+    buttonDisabled() {
+      return !(this.paramL && this.paramL <= 30
+            && this.paramM && this.paramM <= 30
+            && this.paramN && this.paramN <= 30)
+    },
+    setValue(val) {
+      return val.replace('.', '')
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.container {
+  margin-top: 50px;
+}
 </style>
