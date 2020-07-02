@@ -9,7 +9,7 @@
               :value="+probability"
               v-model="probability"
       />
-      <div  class="button_container">
+      <div  class="buttons_container">
         <BButton :label="BUTTON_LABEL.PROBABILITY"
                   :onClick="setRandomProbability"
         />
@@ -82,6 +82,9 @@ export default {
 <style lang="scss" scoped>
 .container {
   justify-content: center;
+  margin-top: 50px;
+}
+.buttons_container {
   margin-top: 50px;
 }
 

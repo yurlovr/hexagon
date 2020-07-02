@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="stats" v-if="getMode === 'auto'">
-      Показать
+      <Table />
     </div>
   </section>
 </template>
@@ -35,6 +35,7 @@
 <script>
 import Hex from './Hex'
 import Header from './Header'
+import Table from './Table'
 import { mapGetters, mapActions } from 'vuex'
 const cryptoRandomString = require('crypto-random-string')
 
@@ -42,7 +43,8 @@ export default {
   name: 'HexField',
   components: {
     Hex,
-    Header
+    Header,
+    Table
   },
   data() {
     return {
@@ -113,6 +115,7 @@ export default {
   width: max-content;
   margin: 0 auto;
   margin-top: 50px;
+  margin-bottom: 50px;
   padding-top: 20px;
 }
 .stat {
@@ -129,6 +132,7 @@ export default {
   margin-top: -14px;
 }
 .stats {
-
+  width: 825px;
+  margin: 0 auto;
 }
 </style>
