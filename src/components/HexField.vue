@@ -26,6 +26,9 @@
         </div>
       </div>
     </div>
+    <div class="stats" v-if="getMode === 'auto'">
+      Показать
+    </div>
   </section>
 </template>
 
@@ -43,6 +46,11 @@ export default {
   },
   data() {
     return {
+    }
+  },
+  mounted() {
+    if (this.getMode === 'auto') {
+      this.setStats()
     }
   },
   computed: {
@@ -68,6 +76,9 @@ export default {
   methods: {
     ...mapActions('params', [
       'setCheckHex'
+    ]),
+    ...mapActions('app', [
+      'setStats'
     ]),
     getKey() {
       return cryptoRandomString({length: 5})
@@ -116,5 +127,8 @@ export default {
 }
 .first {
   margin-top: -14px;
+}
+.stats {
+
 }
 </style>

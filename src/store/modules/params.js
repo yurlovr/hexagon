@@ -6,9 +6,11 @@ function defaultState() {
     hexArray: [],
     checkedHex: null,
     totalAmountHex: 0,
-    totalHexColor: {}
+    totalHexColor: {},
+    probability: null
   }
 }
+
 
 export default {
   namespaced: true,
@@ -16,6 +18,7 @@ export default {
     ...defaultState(),
   },
   actions: {
+    setProbability: ({ commit }, payload) => commit('SET_PROBABILITY', payload),
     setTotalHexColor: ({ commit }, payload) => commit('SET_TOTAL_HEX_COLOR', payload),
     setTotalAmountHex: ({ commit }, payload) => commit('SET_TOTAL_AMOUNT_HEX', payload),
     setCheckHex: ({ commit }, payload) => commit('SET_CHECK_HEX', payload),
@@ -23,11 +26,11 @@ export default {
     setParamL: ({ commit }, payload) => commit('SET_PARAM_L', payload),
     setParamM: ({ commit }, payload) => commit('SET_PARAM_M', payload),
     setParamN: ({ commit }, payload) => commit('SET_PARAM_N', payload),
-    setDefaultState: ({ commit }) => commit('SET_DEFAULT_STATE')
+    setDefaultState: ({ commit }) => commit('SET_DEFAULT_STATE'),
   },
   mutations: {
     SET_DEFAULT_STATE: (state) => {
-      const s = defaultState()
+      const s =  defaultState()
       Object.keys(s).forEach(key => {
         state[key] = s[key]
       })
@@ -52,6 +55,7 @@ export default {
         }
       }
     },
+    SET_PROBABILITY: (state, payload) => { state.probability = payload.data },
     SET_TOTAL_AMOUNT_HEX: (state, payload) => { state.totalAmountHex = payload.data },
     SET_CHECK_HEX: (state, payload) => { state.checkedHex = payload.data },
     SET_HEX_ARRAY: (state, payload) => { state.hexArray = payload.data },
@@ -60,6 +64,7 @@ export default {
     SET_PARAM_N: (state, payload) => { state.paramN = payload.data },
   },
   getters: {
+    getProbability: state => state.probability,
     getTotalHexColor: state => state.totalHexColor,
     getTotalAmountHex: state => state.totalAmountHex,
     getCheckHex: state => state.checkedHex,

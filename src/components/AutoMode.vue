@@ -2,18 +2,22 @@
   <div>
     <Header />
     <section class="container">
-      <h1 class="header">
-        {{AUTO_MODE_HEADER}}
-      </h1>
       <IInput :label="INPUT_LABEL.PROBABILITY.label"
               :placeholder="INPUT_LABEL.PROBABILITY.placeholder"
-              :type="number"
+              :type="'number'"
+              :errorText="REQUIRED_FIELD_PROBABILITY"
+              :value="+probability"
+              v-model="probability"
       />
-      <BButton :label="BUTTON_LABEL.AUTO"
-                :disabled="buttonDisabled()"
-                :onClick="setProbability"
-
-      />
+      <div  class="button_container">
+        <BButton :label="BUTTON_LABEL.PROBABILITY"
+                  :onClick="setRandomProbability"
+        />
+        <BButton :label="BUTTON_LABEL.START"
+                  :disabled="buttonDisabled()"
+                  :onClick="goHexField"
+        />
+      </div>
     </section>
   </div>
 </template>
@@ -22,7 +26,8 @@
 import IInput from './IInput'
 import BButton from './BButton'
 import Header from './Header'
-import { BUTTON_LABEL, INPUT_LABEL, AUTO_MODE_HEADER } from '../const/const'
+import { BUTTON_LABEL, INPUT_LABEL, AUTO_MODE_HEADER, REQUIRED_FIELD_PROBABILITY } from '../const/const'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'AutoMode',
@@ -35,15 +40,40 @@ export default {
     return {
       BUTTON_LABEL,
       INPUT_LABEL,
-      AUTO_MODE_HEADER
+      AUTO_MODE_HEADER,
+      REQUIRED_FIELD_PROBABILITY
+    }
+  },
+  computed: {
+    ...mapGetters('params', [
+      'getProbability'
+    ]),
+    probability: {
+      get () {
+        return this.getProbability
+      },
+      set (val) {
+        this.setProbability({
+          data: val
+        })
+      }
     }
   },
   methods: {
-    setProbability() {
-      console.log()
+    ...mapActions('params', [
+      'setProbability'
+    ]),
+    ...mapActions('app', [
+      'setAutoRenderHexField'
+    ]),
+    setRandomProbability() {
+      this.probability = +Math.random().toFixed(5)
+    },
+    goHexField() {
+      this.setAutoRenderHexField()
     },
     buttonDisabled() {
-      return true
+      return !this.probability || !(+this.probability > 0 && +this.probability < 1)
     }
   }
 }

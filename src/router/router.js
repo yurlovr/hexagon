@@ -33,7 +33,8 @@ const routes = [
     name: 'autoMode',
     component: AutoMode,
     meta: {
-      home: false
+      home: false,
+      auto: true
     }
   },
   {
@@ -68,6 +69,11 @@ router.beforeEach((to, from, next) => {
             data: null
           })
         }
+        if (getter['app/getStats'].length) {
+          dispatch('app/setSaveStats', {
+            data: []
+          })
+        }
         if (getter['ui/getShowGoBack']) {
           dispatch('ui/setShowGoBack', {
             data: false
@@ -83,7 +89,7 @@ router.beforeEach((to, from, next) => {
         })
         next()
         return
-    } else if (to.matched.some(record => !record.meta.home)) {
+    } else if (to.matched.some(record => !record.meta.home && !record.meta.notFound)) {
       if (!getter['params/getParamL'] || !getter['params/getParamM'] || !getter['params/getParamN']) {
         router.push('/')
         } else {
@@ -93,6 +99,12 @@ router.beforeEach((to, from, next) => {
             })
             dispatch('ui/setShowGoBack', {
               data: true
+            })
+          }
+          if (to.matched.some(record => record.meta.auto)) {
+            dispatch('app/setDefaultHexArray')
+            dispatch('ui/setHeaderText', {
+              data: HEADER_TEXT.AUTO
             })
           }
         next()
