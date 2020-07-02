@@ -24,7 +24,7 @@
             v-model="paramN"
     />
     <BButton  :label="BUTTON_LABEL.START"
-              :onClick="buildHexField"
+              :onClick="goSelectMode"
               :disabled="buttonDisabled()"
     />
   </form>
@@ -50,18 +50,6 @@ export default {
       BUTTON_LABEL,
       INPUT_LABEL,
       REQUIRED_FIELD
-    }
-  },
-  created() {
-    if (!this.getMode) {
-      this.setMode({
-        data: 'hand'
-      })
-    }
-  },
-  mounted() {
-    if (this.getParamL || this.getParamM || this.getParamN) {
-      this.setDefaultState({})
     }
   },
   computed: {
@@ -118,10 +106,17 @@ export default {
       'setRenderHexField',
       'setMode'
     ]),
-    buildHexField(event) {
-      event.preventDefault()
-      this.setRenderHexField()
+    ...mapActions('ui', [
+      'setShowGoBack',
+      'setHeaderText'
+    ]),
+    goSelectMode() {
+      this.$router.push('/select')
     },
+    // buildHexField(event) {
+    //   event.preventDefault()
+    //   this.setRenderHexField()
+    // },
     buttonDisabled() {
       return !(this.paramL && this.paramL <= 30
             && this.paramM && this.paramM <= 30

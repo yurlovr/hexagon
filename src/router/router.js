@@ -1,17 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import store from '../store/index'
-// import uuid from 'uuid'
-// import InputBlock from '../components/InputBlock'
+import store from '../store/index'
 import SelectMode from '../components/SelectMode'
 import HexField from '../components/HexField'
 import HandMode from '../components/HandMode'
 import AutoMode from '../components/AutoMode'
-// import UsersResult from '../components/UsersResult/UsersResult'
-// import User from '../components/User/User'
-// import Transactions from '../components/Transactions/Transactions'
 import NotFound from '../components/NotFound'
-// import { LOADING_ACTIONS, HEADER_BUTTON_STATE } from '../const/const'
+import { HEADER_TEXT } from '../const/const'
 
 Vue.use(VueRouter)
 
@@ -19,44 +14,36 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: SelectMode,
+    component: HandMode,
+    meta: {
+      home: true
+    }
   },
   {
-    path: '/hand',
-    name: 'handMode',
-    component: HandMode,
-    // meta: {
-    //   users: true
-    // }
+    path: '/select',
+    name: 'select',
+    component: SelectMode,
+    meta: {
+      home: false,
+      selectMode: true
+    }
   },
   {
     path: '/auto',
     name: 'autoMode',
     component: AutoMode,
-    // meta: {
-    //   users: true
-    // }
+    meta: {
+      home: false
+    }
   },
   {
     path: '/hexField',
     name: 'hexField',
     component: HexField,
-    // meta: {
-    //   users: true
-    // }
+    meta: {
+      home: false
+    }
   },
-  // {
-  //   path: '/user/:id',
-  //   name: 'user',
-  //   component: User,
-  //   props: true
-  // },
-  // {
-  //   path: '/transactions/:id',
-  //   name: 'transactions',
-  //   component: Transactions,
-  //   props: true
-  // },
   {
     path: '*',
     component: NotFound,
@@ -71,26 +58,49 @@ let router =  new VueRouter({
   // base: (process.env.NODE_ENV === 'development') ? '/' : '/usersList',
   routes
 })
-// router.beforeEach((to, from, next) => {
-//   let dispatch = store.dispatch
-//   const meta = uuid()
-//     if (to.matched.some(record => record.meta.users)) {
-//         dispatch('app/setIsLoading', {
-//           meta,
-//           data: LOADING_ACTIONS.USERS
-//         })
-//         next()
-//         return
-//     } else if(to.matched.some(record => record.meta.notFound)) {
-//       dispatch('app/setShowBtnCreateUser', {
-//         meta,
-//         data: HEADER_BUTTON_STATE.NOT_FOUND
-//       })
-//       next()
-//       return
-//     } else {
-//         next()
-//     }
-// })
+router.beforeEach((to, from, next) => {
+  let dispatch = store.dispatch
+  let getter = store.getters
+    if (to.matched.some(record => record.meta.home)) {
+        dispatch('params/setDefaultState')
+        if (getter['app/getMode']) {
+          dispatch('app/setMode', {
+            data: null
+          })
+        }
+        if (getter['ui/getShowGoBack']) {
+          dispatch('ui/setShowGoBack', {
+            data: false
+          })
+        }
+        if (getter['ui/getGoMainPage']) {
+          dispatch('ui/setGoMainPage', {
+            data: false
+          })
+        }
+        dispatch('ui/setHeaderText', {
+          data: HEADER_TEXT.HAND
+        })
+        next()
+        return
+    } else if (to.matched.some(record => !record.meta.home)) {
+      if (!getter['params/getParamL'] || !getter['params/getParamM'] || !getter['params/getParamN']) {
+        router.push('/')
+        } else {
+          if (to.matched.some(record => record.meta.selectMode)) {
+            dispatch('ui/setHeaderText', {
+              data:HEADER_TEXT.SELECT
+            })
+            dispatch('ui/setShowGoBack', {
+              data: true
+            })
+          }
+        next()
+        return
+      }
+    } else {
+        next()
+    }
+})
 
 export default router

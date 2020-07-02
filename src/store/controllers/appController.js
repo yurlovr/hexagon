@@ -9,18 +9,23 @@ export default function (router) {
       let payload = mutation.payload
       switch (mutation.type) {
         case 'app/SET_MODE':
-          if (payload.data === 'hand') {
-            dispatch('ui/setHeaderText', {
-              data: HEADER_TEXT.HAND
-            })
-          }
-          if (payload.data === 'auto') {
-            dispatch('ui/setHeaderText', {
-              data: HEADER_TEXT.AUTO
-            })
-          }
-          if (window.location.pathname.includes(payload.data)) return
-          router.push(`${payload.data}`)
+          if (!payload.data) return
+          // if (payload.data === 'hand') {
+          //   dispatch('ui/setHeaderText', {
+          //     data: HEADER_TEXT.HAND
+          //   })
+          // }
+          // if (payload.data === 'auto') {
+          //   dispatch('ui/setHeaderText', {
+          //     data: HEADER_TEXT.AUTO
+          //   })
+          // }
+          // if (window.location.pathname.includes(payload.data)) return
+          // router.push(`${payload.data}`)
+          dispatch('ui/setHeaderText', {
+            data: HEADER_TEXT.HEX_FIELD
+          })
+          dispatch('app/setRenderHexField')
           break
         case 'app/SET_RENDER_HEX_FIELD':
           dispatch('ui/setGoMainPage', {

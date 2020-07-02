@@ -54,6 +54,9 @@ export default {
       'getTotalAmountHex',
       'getTotalHexColor'
     ]),
+    ...mapGetters('app', [
+      'getMode'
+    ]),
     getTotalCountCells: {
       get () {
         return this.getHexArray.reduce((summ, current) => {
@@ -75,6 +78,7 @@ export default {
     clickToHex(item) {
       // const id = event.currentTarget.id
       if (item.check) return
+      if (this.getMode === 'auto') return
       this.setCheckHex({
         data: {
           ...item,

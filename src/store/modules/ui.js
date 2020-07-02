@@ -1,7 +1,8 @@
 function defaultState() {
   return {
     headerText: '',
-    goMain: false
+    goMain: false,
+    showGoBack: false
   }
 }
 
@@ -11,6 +12,7 @@ export default {
     ...defaultState()
   },
   actions: {
+    setShowGoBack: ({ commit }, payload) => commit('SET_SHOW_GO_BACK', payload),
     setHeaderText: ({ commit }, payload) => commit('SET_HEADER_TEXT', payload),
     setGoBack: ({ commit }) => commit('SET_GO_BACK'),
     setDefaultState: ({ commit }) => commit('SET_DEFAULT_STATE'),
@@ -23,11 +25,13 @@ export default {
         state[key] = s[key]
       })
     },
+    SET_SHOW_GO_BACK: (state, payload) => { state.showGoBack = payload.data },
     SET_HEADER_TEXT: (state, payload) => { state.headerText = payload.data },
     SET_GO_MAIN_PAGE: (state, payload) => { state.goMain = payload.data },
     SET_GO_BACK: () => {}
   },
   getters: {
+    getShowGoBack: state => state.showGoBack,
     getHeaderText: state => state.headerText,
     getGoMainPage: state => state.goMain
   }

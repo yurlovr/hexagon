@@ -38,13 +38,14 @@ export const INPUT_LABEL = {
   }
 }
 
-export const SELECT_MODE_HEADER = 'Выберите режим ввода данных'
+export const SELECT_MODE_HEADER = 'Как происходит заполнение сетки'
 
 export const AUTO_MODE_HEADER = 'Возможная вероятность единицы'
 
 export const HEADER_TEXT = {
   HAND: 'Введите размеры сетки',
   AUTO: 'Введите вероятность появления 1',
+  SELECT: 'Заполнение сетки',
   HEX_FIELD: 'Размеры L: getParamL M: getParamM N: getParamN'
 }
 

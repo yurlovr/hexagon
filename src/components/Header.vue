@@ -1,12 +1,14 @@
 <template>
   <div class="header_block">
-    <BButton :label="BUTTON_LABEL.BACK.label"
+    <BButton  v-if="getShowGoBack"
+              :label="BUTTON_LABEL.BACK.label"
               :id="BUTTON_LABEL.BACK.id"
               :onClick="goBack"
               :className="'header_button'"
     />
     <h1 class="header_text"
-        :class="{'header_text_right': !getGoMainPage}"
+        :class="{'header_text_right': !getGoMainPage,
+                  'header_text_left': !getShowGoBack}"
         v-if="getHeaderText">
       {{headerText()}}
     </h1>
@@ -37,7 +39,8 @@ export default {
   computed: {
     ...mapGetters('ui', [
       'getHeaderText',
-      'getGoMainPage'
+      'getGoMainPage',
+      'getShowGoBack'
     ]),
     ...mapGetters('params', [
       'getParamL',
@@ -47,8 +50,7 @@ export default {
   },
   methods: {
     ...mapActions('ui', [
-      'setHeaderText',
-      'setGoBack'
+      'setGoBack',
     ]),
     headerText() {
       if (this.getHeaderText && this.getHeaderText.includes('getParam')) {
@@ -89,6 +91,9 @@ export default {
   text-align: center;
   &_right {
     margin-right: 180px;
+  }
+  &_left {
+    margin-left: 180px;
   }
 }
 </style>
