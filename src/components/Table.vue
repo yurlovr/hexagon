@@ -5,29 +5,44 @@
     align="center"
   >
     <el-table-column
-      prop="date"
+      prop="probability"
       label="Вероятность"
       width="150">
     </el-table-column>
     <el-table-column label="Количество доменов в решетке">
       <el-table-column
-        prop="name"
+        prop="diffrentDomen"
         label="Всего"
         width="124">
       </el-table-column>
       <el-table-column
-        prop="name"
+        prop="diffrentDomen"
         label="Неодносвязных"
         width="200">
       </el-table-column>
     </el-table-column>
     <el-table-column
-      prop="state"
+      prop="paramL"
+      label="L"
+      width="50">
+    </el-table-column>
+    <el-table-column
+      prop="paramM"
+      label="M"
+      width="50">
+    </el-table-column>
+    <el-table-column
+      prop="paramN"
+      label="N"
+      width="50">
+    </el-table-column>
+    <el-table-column
+      prop="totalCountHex"
       label="Количество ячеек в решетке"
       width="150">
     </el-table-column>
     <el-table-column
-      prop="city"
+      prop="totalAmountHex"
       label="Количество выбранных (1)"
       width="200">
     </el-table-column>
@@ -37,67 +52,10 @@
 <script>
 export default {
   name: 'Table',
-  // props: {
-  //   tableWidth: {
-  //     type: String
-  //   },
-  //   data: {
-  //     type: Array
-  //   }
-  // },
-  data() {
-    return {
-      tableData: [{
-          date: '2016-05-03',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-02',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-04',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-01',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-08',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-06',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }, {
-          date: '2016-05-07',
-          name: 'Tom',
-          state: 'California',
-          city: 'Los Angeles',
-          address: 'No. 189, Grove St, Los Angeles',
-          zip: 'CA 90036'
-        }]
+  props: {
+    tableData: {
+      type: Array
     }
-  }
+  },
 }
 </script>

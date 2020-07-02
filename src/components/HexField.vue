@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="stats" v-if="getMode === 'auto'">
-      <Table />
+      <Table :tableData="getStats" />
     </div>
   </section>
 </template>
@@ -65,7 +65,8 @@ export default {
       'getTotalHexColor'
     ]),
     ...mapGetters('app', [
-      'getMode'
+      'getMode',
+      'getStats'
     ]),
     getTotalCountCells: {
       get () {
@@ -132,7 +133,7 @@ export default {
   margin-top: -14px;
 }
 .stats {
-  width: 825px;
+  width: 975px;
   margin: 0 auto;
 }
 </style>
