@@ -16,12 +16,10 @@ export default function getCommonLine(array, item) {
 
 function getOffsetUp(array1, array2) {
   if (array1.filter(Boolean).length > array2.filter(Boolean).length) return -1
-  if (array1.filter(Boolean).length < array2.filter(Boolean).length) return  0
   return 0
 }
 
 function getOffsetDown(array1, array2) {
-  if (array1.filter(Boolean).length > array2.filter(Boolean).length) return 0
   if (array1.filter(Boolean).length < array2.filter(Boolean).length) return  1
   return 0
 }

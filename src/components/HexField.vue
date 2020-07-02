@@ -7,7 +7,7 @@
           Количество ячеек в решетке: <span>{{getTotalCountCells}}</span>
         </p>
         <p class="total">
-          Количество доменов (яцейки с 1): <span>{{getTotalAmountHex && getTotalAmountHex}}</span>
+          Количество доменов (ячейки с 1): <span>{{getTotalAmountHex && getTotalAmountHex}}</span>
         </p>
         <p class="total">
           Количество односвязных доменов(одинакового цвета): <span>{{getDiffrentDomen()}}</span>
@@ -21,8 +21,9 @@
           <Hex v-for="item in row"
               :key="item ? item.id : getKey()"
               :id="item && item.id"
-              :item="item && item"
-              :onClick="clickToHex"/>
+              :item="item ? item : null"
+              @hex="clickToHex"
+          />
         </div>
       </div>
     </div>
@@ -54,8 +55,16 @@ export default {
     if (this.getMode === 'auto') {
       this.setStats()
     }
+    if (this.getIsLoading) {
+      this.setIsLoading({
+        data: false
+      })
+    }
   },
   computed: {
+    ...mapGetters('ui', [
+      'getIsLoading'
+    ]),
     ...mapGetters('params', [
       'getParamL',
       'getParamM',
@@ -77,6 +86,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions('ui', [
+      'setIsLoading'
+    ]),
     ...mapActions('params', [
       'setCheckHex'
     ]),
@@ -90,13 +102,12 @@ export default {
       return Object.keys(this.getTotalHexColor).length
     },
     clickToHex(item) {
-      // const id = event.currentTarget.id
-      if (item.check) return
+      if (!item) return
       if (this.getMode === 'auto') return
       this.setCheckHex({
         data: {
           ...item,
-          check: 1 // item.check ? 0 : 1
+          check: item.check ? 0 : 1
         }
       })
     },
@@ -133,7 +144,7 @@ export default {
   margin-top: -14px;
 }
 .stats {
-  width: 975px;
+  width: 1000px;
   margin: 0 auto;
 }
 </style>

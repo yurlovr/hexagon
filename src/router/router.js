@@ -95,11 +95,12 @@ router.beforeEach((to, from, next) => {
         } else {
           if (to.matched.some(record => record.meta.selectMode)) {
             dispatch('ui/setHeaderText', {
-              data:HEADER_TEXT.SELECT
+              data: HEADER_TEXT.SELECT
             })
             dispatch('ui/setShowGoBack', {
               data: true
             })
+            dispatch('app/setDefaultHexArray')
           }
           if (to.matched.some(record => record.meta.auto)) {
             dispatch('app/setDefaultHexArray')

@@ -7,9 +7,9 @@ export default {
     setCheckHex: ({ commit }, payload) => commit('SET_CHECK_HEX', payload)
   },
   mutations: {
-    SET_CHECK_HEX: (state, payload) => { state.headerText = payload.data }
+    SET_CHECK_HEX: (state, payload) => { state.checkedHex = payload.data }
   },
   getters: {
-    getHeaderText: state => state.headerText,
+    getCheckHex: state => state.checkedHex,
   }
 }

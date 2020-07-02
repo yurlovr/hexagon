@@ -1,7 +1,7 @@
 <template>
 <div>
   <Header />
-  <form class="container">
+  <div class="container">
     <IInput :label="INPUT_LABEL.L.label"
             :type="'number'"
             :placeholder="INPUT_LABEL.L.placeholder"
@@ -27,7 +27,7 @@
               :onClick="goSelectMode"
               :disabled="buttonDisabled()"
     />
-  </form>
+  </div>
 </div>
 </template>
 
@@ -113,10 +113,6 @@ export default {
     goSelectMode() {
       this.$router.push('/select')
     },
-    // buildHexField(event) {
-    //   event.preventDefault()
-    //   this.setRenderHexField()
-    // },
     buttonDisabled() {
       return !(this.paramL && this.paramL <= 30
             && this.paramM && this.paramM <= 30

@@ -1,5 +1,3 @@
-function random( min, max ) {
-    return Math.round( Math.random() * (max - min) + min );
+export default function random(min, max) {
+    return Math.round(Math.random() * (max - min) + min)
   }
-
-export const randomPercent = () => random(0 , 100)

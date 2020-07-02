@@ -2,6 +2,7 @@ export const BUTTON_LABEL = {
   START: 'Старт',
   AUTO: 'Авто',
   PROBABILITY: 'Вероятность',
+  CHANGE_SIZE: 'Изменить размеры',
   HAND_MODE: {
     id: 'hand',
     label: 'В ручную'
@@ -52,3 +53,4 @@ export const HEADER_TEXT = {
 
 export const REQUIRED_FIELD = 'Обязательное поле'
 export const REQUIRED_FIELD_PROBABILITY = 'Обязательное поле. Значение от 0.1 до 0.99'
+export const SPINNER_TEXT = 'Считаю...'

@@ -1,5 +1,6 @@
 import createHexArray from '../../libs/createyHexArray'
 import { HEADER_TEXT } from '../../const/const'
+import random from '../../libs/random'
 
 export default function (router) {
   return store => {
@@ -23,6 +24,23 @@ export default function (router) {
           data: HEADER_TEXT.HEX_FIELD
         })
       }
+      const autoRender = () => {
+        getter['params/getHexArray'].forEach(value => {
+          return value.forEach(item => {
+            if (item && Math.random() * 100 < getter['params/getProbability'] * 100) {
+              dispatch('params/setCheckHex', {
+                data: {
+                  ...item,
+                  check: 1
+                }
+              })
+            }
+          })
+        })
+        showGoMainButton()
+        headerTextField()
+        router.push(`hexField`)
+      }
       switch (mutation.type) {
         case 'app/SET_MODE':
           if (!payload.data) return
@@ -30,7 +48,6 @@ export default function (router) {
             dispatch('ui/setHeaderText', {
               data: HEADER_TEXT.AUTO
             })
-            // createHex()
             router.push(`auto`)
             return
           }
@@ -43,21 +60,20 @@ export default function (router) {
           router.push(`hexField`)
           break
         case 'app/SET_AUTO_RENDER_HEX_FIELD':
-          getter['params/getHexArray'].forEach(value => {
-            return value.forEach(item => {
-              if (item && Math.random() * 100 < getter['params/getProbability'] * 100) {
-                dispatch('params/setCheckHex', {
-                  data: {
-                    ...item,
-                    check: 1
-                  }
-                })
-              }
+          if (+getter['params/getParamL'] >= 10 || +getter['params/getParamM'] >= 10 || +getter['params/getParamN'] >= 10) {
+            dispatch('ui/setIsLoading', {
+              data: true
             })
-          })
-          showGoMainButton()
-          headerTextField()
-          router.push(`hexField`)
+            return
+          }
+          autoRender()
+          break
+        case 'ui/SET_IS_LOADING':
+          if (payload.data) {
+            setTimeout(() => {
+            autoRender()
+          }, 10)
+        }
           break
         case 'app/SET_DEFAULT_HEX_ARRAY':
           createHex()
@@ -75,7 +91,7 @@ export default function (router) {
           })
           break
           case 'app/SET_STATS':
-            if (getter['app/getStats'].length > 10) {
+            if (getter['app/getStats'].length >= 10) {
               stats = getter['app/getStats'].filter((item, index) => index !== 0)
             } else {
               stats = getter['app/getStats']
@@ -93,6 +109,18 @@ export default function (router) {
                 diffrentDomen: Object.keys(getter['params/getTotalHexColor']).length
               })
             })
+            break
+            case 'params/SET_CHANGE_SIZE':
+              dispatch('params/setParamL', {
+                data: random(0, 30)
+              })
+              dispatch('params/setParamM', {
+                data: random(0, 30)
+              })
+              dispatch('params/setParamN', {
+                data: random(0, 30)
+              })
+              createHex()
             break
       }
     })

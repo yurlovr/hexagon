@@ -43,8 +43,8 @@
     </el-table-column>
     <el-table-column
       prop="totalAmountHex"
-      label="Количество выбранных (1)"
-      width="200">
+      label="Количество выбранных ячеек (1)"
+      width="225">
     </el-table-column>
   </el-table>
 </template>

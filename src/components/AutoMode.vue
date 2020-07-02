@@ -2,6 +2,12 @@
   <div>
     <Header />
     <section class="container">
+      <div class="size_container">
+        Размеры сетки:
+        <p class="content">
+        L: <span>{{getParamL}}</span>, M: <span> {{getParamM}}</span>, N: <span>{{getParamN}}</span>
+        </p>
+      </div>
       <IInput :label="INPUT_LABEL.PROBABILITY.label"
               :placeholder="INPUT_LABEL.PROBABILITY.placeholder"
               :type="'number'"
@@ -10,6 +16,9 @@
               v-model="probability"
       />
       <div  class="buttons_container">
+        <BButton :label="BUTTON_LABEL.CHANGE_SIZE"
+                  :onClick="changeSizeHexField"
+        />
         <BButton :label="BUTTON_LABEL.PROBABILITY"
                   :onClick="setRandomProbability"
         />
@@ -46,7 +55,10 @@ export default {
   },
   computed: {
     ...mapGetters('params', [
-      'getProbability'
+      'getProbability',
+      'getParamL',
+      'getParamM',
+      'getParamN'
     ]),
     probability: {
       get () {
@@ -61,13 +73,17 @@ export default {
   },
   methods: {
     ...mapActions('params', [
-      'setProbability'
+      'setProbability',
+      'setChangeSize'
     ]),
     ...mapActions('app', [
       'setAutoRenderHexField'
     ]),
+    changeSizeHexField() {
+      this.setChangeSize()
+    },
     setRandomProbability() {
-      this.probability = +Math.random().toFixed(5)
+      this.probability = Math.random().toFixed(5)
     },
     goHexField() {
       this.setAutoRenderHexField()
@@ -86,6 +102,17 @@ export default {
 }
 .buttons_container {
   margin-top: 50px;
+}
+.size_container {
+    min-width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 20px;
+}
+.content {
+  & > span {
+    font-weight: bold;
+  }
 }
 
 </style>

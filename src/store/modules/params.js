@@ -27,6 +27,7 @@ export default {
     setParamM: ({ commit }, payload) => commit('SET_PARAM_M', payload),
     setParamN: ({ commit }, payload) => commit('SET_PARAM_N', payload),
     setDefaultState: ({ commit }) => commit('SET_DEFAULT_STATE'),
+    setChangeSize: ({ commit }) => commit('SET_CHANGE_SIZE')
   },
   mutations: {
     SET_DEFAULT_STATE: (state) => {
@@ -36,18 +37,26 @@ export default {
       })
     },
     SET_TOTAL_HEX_COLOR: (state, payload) => {
-      const currentColor = Object.keys(state.totalHexColor).find(key => key === color)
+      if (!Object.keys(payload.data).length) {
+        state.totalHexColor = {}
+        return
+      }
       const { color } = payload.data
+      const currentColor = Object.keys(state.totalHexColor).find(key => key === color)
       if (payload.action === 'add') {
         if (currentColor) {
-          state.totalHexColor = Object.assign(state.totalHexColor, {[color]: state.totalHexColor.count + 1})
+          state.totalHexColor = Object.assign(state.totalHexColor, {[color]: state.totalHexColor[color] + 1})
         } else {
           state.totalHexColor = Object.assign(state.totalHexColor, {[color]: 1})
         }
       }
       if (payload.action === 'del') {
-        if (state.totalAmountHex[color] > 1) {
-          state.totalHexColor = Object.assign(state.totalHexColor, {[color]: state.totalHexColor.count - 1})
+        if (state.totalHexColor[color] >= 1) {
+          const newTotalColor = Object.assign(state.totalHexColor, {[color]: state.totalHexColor[color] - 1})
+          if (newTotalColor[color] === 0) {
+            delete newTotalColor[color]
+            state.totalHexColor = { ...newTotalColor}
+          }
         } else {
           const newTotalColor = { ...state.totalHexColor}
           delete newTotalColor[color]
@@ -62,6 +71,7 @@ export default {
     SET_PARAM_L: (state, payload) => { state.paramL = payload.data },
     SET_PARAM_M: (state, payload) => { state.paramM = payload.data },
     SET_PARAM_N: (state, payload) => { state.paramN = payload.data },
+    SET_CHANGE_SIZE: () => {}
   },
   getters: {
     getProbability: state => state.probability,

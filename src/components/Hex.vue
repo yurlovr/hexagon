@@ -20,13 +20,10 @@ export default {
       type: Object,
       default: () => null
     },
-    onClick: {
-      type: Function
-    }
   },
   methods: {
     clickItem() {
-      this.onClick(this.item)
+      this.$emit('hex', this.item)
     },
     getFill() {
       return this.item.color || '#FFFFFF'

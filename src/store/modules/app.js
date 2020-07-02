@@ -2,7 +2,7 @@ export default {
   namespaced: true,
   state: {
     mode: null,
-    stats: []
+    stats: [],
   },
   actions: {
     setMode: ({ commit }, payload) => commit('SET_MODE', payload),
@@ -18,7 +18,7 @@ export default {
     SET_AUTO_RENDER_HEX_FIELD: () => {},
     SET_DEFAULT_HEX_ARRAY: () => {},
     SET_STATS: () => {},
-    SAVE_STATS: (state, payload) => {state.stats = payload.data },
+    SAVE_STATS: (state, payload) => {state.stats = payload.data }
   },
   getters: {
     getMode: state => state.mode,
