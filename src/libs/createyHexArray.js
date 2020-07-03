@@ -88,6 +88,7 @@ export default function createHexArray (l, m , n) {
           check: 0,
           color: '',
           index,
+          arrayIndex: j - 1,
           row
         })
         index++
@@ -115,7 +116,8 @@ export default function createHexArray (l, m , n) {
             check: 0,
             color: '',
             index,
-            row
+            row,
+            arrayIndex: j,
           })
           index++
         }
@@ -142,7 +144,8 @@ export default function createHexArray (l, m , n) {
             check: 0,
             color: '',
             index,
-            row
+            row,
+            arrayIndex: j,
           })
           index++
         }
