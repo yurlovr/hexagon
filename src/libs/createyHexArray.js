@@ -9,71 +9,6 @@ export default function createHexArray (l, m , n) {
   const middleLimit = m ? maxLength - minLength : 0
   const bottomLimit = l ? maxLength - Math.abs(m - l) : 0
   let row = 0
-  // for (let i = 1; i <= l; i ++) {
-  //   row++
-  //   let array = []
-  //   for (let j = 1; j < n + l; j++) {
-  //     if (i !== l && j < d) {
-  //       array.push(null)
-  //     } else {
-  //       array.push({
-  //         id: counter++,
-  //         check: 0,
-  //         color: '',
-  //         index: j - 1,
-  //         row
-  //       })
-  //     }
-  //   }
-  //   d--
-  //   if (i < n + l) {
-  //     prevLength = array.length
-  //   }
-  //   result.push(array)
-  // }
-
-  // for (let i = 1; i <= middleLimit; i++) {
-  //   row++
-  //   let middleArray = []
-  //   for (let j = 0; j < n + l + nullElement; j++) {
-  //     if (j <= nullElement) {
-  //       middleArray.push(null)
-  //     } else {
-  //       middleArray.push({
-  //         id: counter++,
-  //         check: 0,
-  //         color: '',
-  //         index: j,
-  //         row
-  //       })
-  //     }
-  //   }
-  //   nullElement++
-  //   result.push(middleArray)
-  //   if (i === middleLimit) {
-  //     prevLength = middleArray.length
-  //   }
-  // }
-
-  // for (let i = 1; i < bottomLimit; i++) {
-  //   row++
-  //   let array = []
-  //   for (let j = 0; j < prevLength; j++) {
-  //     if (j <= nullElement) {
-  //       array.push(null)
-  //     } else {
-  //       array.push({
-  //         id: counter++,
-  //         check: 0,
-  //         color: '',
-  //         index: j,
-  //         row
-  //       })
-  //     }
-  //   }
-  //   nullElement++
-  //   result.push(array)
-  // }
   const topBlock = () => {
     for (let i = 1; i <= l; i ++) {
       row++
@@ -88,6 +23,7 @@ export default function createHexArray (l, m , n) {
           check: 0,
           color: '',
           index,
+          arrayIndex: j - 1,
           row
         })
         index++
@@ -115,7 +51,8 @@ export default function createHexArray (l, m , n) {
             check: 0,
             color: '',
             index,
-            row
+            row,
+            arrayIndex: j,
           })
           index++
         }
@@ -142,7 +79,8 @@ export default function createHexArray (l, m , n) {
             check: 0,
             color: '',
             index,
-            row
+            row,
+            arrayIndex: j,
           })
           index++
         }
@@ -154,5 +92,13 @@ export default function createHexArray (l, m , n) {
   topBlock()
   middleBlock()
   bottomBlock()
-  return result
+  let middleBlockIndex = 0
+  for (let i = 0; i < result.length; i++) {
+    console.log(i)
+    if (result[i].every(Boolean)) {
+      middleBlockIndex = i
+      break
+    }
+  }
+  return {result, middleBlockIndex}
 }

@@ -7,7 +7,8 @@ function defaultState() {
     checkedHex: null,
     totalAmountHex: 0,
     totalHexColor: {},
-    probability: null
+    probability: null,
+    middleBlockIndex: 0
   }
 }
 
@@ -18,6 +19,7 @@ export default {
     ...defaultState(),
   },
   actions: {
+    setMiddleBlockIndex: ({ commit }, payload) => commit('SET_MIDDLE_BLOCK_INDEX', payload),
     setProbability: ({ commit }, payload) => commit('SET_PROBABILITY', payload),
     setTotalHexColor: ({ commit }, payload) => commit('SET_TOTAL_HEX_COLOR', payload),
     setTotalAmountHex: ({ commit }, payload) => commit('SET_TOTAL_AMOUNT_HEX', payload),
@@ -64,6 +66,7 @@ export default {
         }
       }
     },
+    SET_MIDDLE_BLOCK_INDEX: (state, payload) => { state.middleBlockIndex = payload.data },
     SET_PROBABILITY: (state, payload) => { state.probability = payload.data },
     SET_TOTAL_AMOUNT_HEX: (state, payload) => { state.totalAmountHex = payload.data },
     SET_CHECK_HEX: (state, payload) => { state.checkedHex = payload.data },
@@ -74,6 +77,7 @@ export default {
     SET_CHANGE_SIZE: () => {}
   },
   getters: {
+    getMiddleBlockIndex: state => state.middleBlockIndex,
     getProbability: state => state.probability,
     getTotalHexColor: state => state.totalHexColor,
     getTotalAmountHex: state => state.totalAmountHex,

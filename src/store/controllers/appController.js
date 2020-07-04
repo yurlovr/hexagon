@@ -10,8 +10,12 @@ export default function (router) {
       let payload = mutation.payload
       let stats = null
       const createHex = () => {
+        const data = createHexArray(+getter['params/getParamL'], +getter['params/getParamM'], +getter['params/getParamN'])
         dispatch('params/setHexArray', {
-          data: createHexArray(+getter['params/getParamL'], +getter['params/getParamM'], +getter['params/getParamN'])
+          data: data.result
+        })
+        dispatch('params/setMiddleBlockIndex', {
+          data: data.middleBlockIndex
         })
       }
       const showGoMainButton = () => {
@@ -56,7 +60,6 @@ export default function (router) {
         case 'app/SET_RENDER_HEX_FIELD':
           showGoMainButton()
           headerTextField()
-          createHex()
           router.push(`hexField`)
           break
         case 'app/SET_AUTO_RENDER_HEX_FIELD':

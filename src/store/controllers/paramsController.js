@@ -25,6 +25,10 @@ export default function () {
             limit.beginFor = rowIndex,
             limit.endFor = getter['params/getHexArray'].length
             break
+          case 'CURRENT':
+            limit.beginFor = rowIndex,
+            limit.endFor = getter['params/getHexArray'].length
+            break
         }
         for (let i = limit.beginFor; i < limit.endFor; i++) {
           let array = []
@@ -38,6 +42,34 @@ export default function () {
           }
           newPartOfArray.push(array)
         }
+        changeColorObject(itemColor)
+      }
+      const renderAfterDelColorCurrent = ({action, rowIndex, elemIndex, itemColor}) => {
+        possiblyColor = getColor()
+        newPartOfArray = []
+        let limit = {}
+        switch(action) {
+          case 'CURRENT_LEFT':
+            limit.left = true
+            break
+          case 'CURRENT_RIGHT':
+            limit.right = true
+            break
+        }
+        newPartOfArray = getter['params/getHexArray'][rowIndex - 1].map(value => {
+          if ((limit.left && value && value.index < elemIndex && value.color === itemColor) ||
+              (limit.right && value && value.index > elemIndex && value.color === itemColor)) {
+            counter++
+            return {
+              ...value,
+              color: possiblyColor
+            }
+          }
+          return value
+        })
+        changeColorObject(itemColor)
+      }
+      const changeColorObject = (itemColor) => {
         while(counter) {
           dispatch('params/setTotalHexColor', {
             action: 'add',
@@ -53,6 +85,16 @@ export default function () {
           })
           counter--
         }
+      }
+      const saveHexArrayAfterDelColorCurrentRow = (itemRow) => {
+        dispatch('params/setHexArray', {
+          data: getter['params/getHexArray'].map((item, index) => {
+          if (index === itemRow - 1) {
+            return newPartOfArray
+          }
+          return item
+          })
+        })
       }
       switch (mutation.type) {
         case 'params/SET_CHECK_HEX':
@@ -103,7 +145,7 @@ export default function () {
                 color: payload.data.color,
               }
             })
-            switch (checkHexRow(getter['params/getHexArray'], payload.data)) {
+            switch (checkHexRow(getter['params/getHexArray'], payload.data, getter['params/getMiddleBlockIndex'])) {
               case 'UP':
               renderAfterDelColor({
                   action: 'UP',
@@ -134,14 +176,35 @@ export default function () {
                   })
                 })
                 break
+                case 'CURRENT_LEFT':
+                  renderAfterDelColorCurrent({
+                    action: 'CURRENT_LEFT',
+                    rowIndex: payload.data.row,
+                    elemIndex: payload.data.index,
+                    itemColor: payload.data.color
+                  })
+                  saveHexArrayAfterDelColorCurrentRow(payload.data.row)
+                  break
+                case 'CURRENT_RIGHT':
+                  renderAfterDelColorCurrent({
+                    action: 'CURRENT_RIGHT',
+                    rowIndex: payload.data.row,
+                    elemIndex: payload.data.index,
+                    itemColor: payload.data.color
+                  })
+                  saveHexArrayAfterDelColorCurrentRow(payload.data.row)
+                  break
+                case 'DIAGONAL_DOWN':
+                  console.log('DIAGONAL_DOWN')
+                  break
             }
           }
           break
           case 'params/SET_HEX_ARRAY':
             if (getter['params/getCheckHex']) {
-              dispatch('params/setCheckHex', {
-                data: null
-              })
+              // dispatch('params/setCheckHex', {
+              //   data: null
+              // })
             }
             break
       }
