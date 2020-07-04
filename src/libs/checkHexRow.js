@@ -1,7 +1,6 @@
 export default function checkHexRow(array, item, middleBlockIndex) {
   console.log(item)
   console.log(array[item.row - 1])
-
   const existColorInCurrentRow = array[item.row - 1].find(elem => elem && elem.color === item.color)
   const getUpRow = () => {
     return array[item.row - 2] && array[item.row - 2].find(elem => elem && elem.color === item.color)
@@ -49,12 +48,13 @@ export default function checkHexRow(array, item, middleBlockIndex) {
       return leftPartRow > rightPartRow ? 'CURRENT_RIGHT': 'CURRENT_LEFT'
     }
     if (!upRow && downRow) {
+
       console.log(middleBlockIndex)
       if (item.row - 1 >= middleBlockIndex) {
         console.log("item.row - 1 >= middleBlockIndex")
         let currentIndex = item.arrayIndex
         let noLeft = false
-        let savedIndex = 0
+        // let savedIndex = 0
         let end = false
         let exit = true
 
@@ -90,7 +90,7 @@ export default function checkHexRow(array, item, middleBlockIndex) {
         for (let i = item.row - 1; i < array.length; i++) {
           // eslint-disable-next-line no-debugger
           console.log("I", i)
-          savedIndex = currentIndex
+          // savedIndex = currentIndex
           steps = steps.map(step => {
             const index = whereToGo(step.where, i)
             return {
@@ -154,6 +154,34 @@ export default function checkHexRow(array, item, middleBlockIndex) {
       //     console.log("TRUE", elemExist)
       //     console.log('elem', array[i][item.arrayIndex - indx])
       //     // break
+      //   }
+      //   indx++
+      // }
+      // return !elemExist && 'DIAGONAL_DOWN'
+      // let elemExist = false
+      // let index = item.index
+      // let indx = 1
+      // // console.log('array', array)
+      // for (let i = item.row; i < array.length; i++) {
+      //   // длинна массива
+      //   // console.log('@@@@@@@@@@@@@')
+      //   let prevArrayLength = array[i - 1].filter(i => !i).length
+      //   // console.log('prevArrayLength', prevArrayLength)
+      //   let currentArrayLength = array[i].filter(i => !i).length
+      //   // console.log('currentArrayLength', currentArrayLength)
+      //   if (prevArrayLength < currentArrayLength && array[i][index] && array[i][index].color === item.color) {
+      //     elemExist = true
+      //     break
+      //     // console.log("prevArrayLength < currentArrayLength")
+      //     // console.log("TRUE", elemExist)
+      //     // console.log('elem', array[i][index])
+      //   }
+      //   if (prevArrayLength > currentArrayLength && array[i][item.arrayIndex - indx] && array[i][item.arrayIndex - indx].color === item.color) {
+      //     elemExist = true
+      //     // console.log("prevArrayLength > currentArrayLength")
+      //     // console.log("TRUE", elemExist)
+      //     // console.log('elem', array[i][item.arrayIndex - indx])
+      //     break
       //   }
       //   indx++
       // }

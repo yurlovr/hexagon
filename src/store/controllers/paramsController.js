@@ -197,6 +197,7 @@ export default function () {
                 case 'DIAGONAL_DOWN':
                   console.log('DIAGONAL_DOWN')
                   break
+
             }
           }
           break
