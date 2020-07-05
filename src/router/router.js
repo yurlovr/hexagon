@@ -16,7 +16,8 @@ const routes = [
     name: 'home',
     component: HandMode,
     meta: {
-      home: true
+      home: true,
+      notFound: false
     }
   },
   {
@@ -25,7 +26,8 @@ const routes = [
     component: SelectMode,
     meta: {
       home: false,
-      selectMode: true
+      selectMode: true,
+      notFound: false
     }
   },
   {
@@ -34,7 +36,8 @@ const routes = [
     component: AutoMode,
     meta: {
       home: false,
-      auto: true
+      auto: true,
+      notFound: false
     }
   },
   {
@@ -42,7 +45,8 @@ const routes = [
     name: 'hexField',
     component: HexField,
     meta: {
-      home: false
+      home: false,
+      notFound: false
     }
   },
   {
@@ -62,6 +66,7 @@ let router =  new VueRouter({
 router.beforeEach((to, from, next) => {
   let dispatch = store.dispatch
   let getter = store.getters
+  console.log('ROUTER')
     if (to.matched.some(record => record.meta.home)) {
         dispatch('params/setDefaultState')
         if (getter['app/getMode']) {

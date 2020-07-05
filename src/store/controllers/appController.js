@@ -109,15 +109,16 @@ export default function (router) {
                                   return summ + current.filter(Boolean).length
                               }, 0),
                 totalAmountHex: getter['params/getTotalAmountHex'],
-                diffrentDomen: Object.keys(getter['params/getTotalHexColor']).length
+                diffrentDomen: '---', // Object.keys(getter['params/getTotalHexColor']).length
+                total: Object.keys(getter['params/getTotalHexColor']).length
               })
             })
             break
             case 'params/SET_CHANGE_SIZE':
-              dispatch('params/setParamL', {
+              dispatch('params/setParamM', {
                 data: random(0, 30)
               })
-              dispatch('params/setParamM', {
+              dispatch('params/setParamL', {
                 data: random(0, 30)
               })
               dispatch('params/setParamN', {

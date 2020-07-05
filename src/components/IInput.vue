@@ -60,7 +60,7 @@ export default {
     }
   .input {
       display: block;
-      width: 420px;
+      width: 470px;
       margin-bottom: 25px;
       margin-left: auto;
       margin-right: auto;

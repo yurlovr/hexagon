@@ -3,9 +3,9 @@
   <svg v-else
         @click="clickItem"
         :id="id"
-        class="hexagon" version="1.1" xmlns="http://www.w3.org/2000/svg" width="35" height="40" viewbox="0 0 35 40">
+        class="hexagon" :class="{'hexagon_noclick': cursorPointer}" version="1.1" xmlns="http://www.w3.org/2000/svg" width="35" height="40" viewbox="0 0 35 40">
     <path :fill="getFill()" d="M17.32050807568877 0L34.64101615137754 10L34.64101615137754 30L17.32050807568877 40L0 30L0 10Z"/>
-    <text :x="'13'" y="25">{{!!item.check ? item.check : item.arrayIndex}}</text>
+    <text :x="'13'" y="25">{{!!item.check ? item.check : ''}}</text>
   </svg>
 </template>
 
@@ -20,6 +20,9 @@ export default {
       type: Object,
       default: () => null
     },
+    cursorPointer: {
+      type: Boolean
+    }
   },
   methods: {
     clickItem() {
@@ -37,6 +40,9 @@ export default {
   stroke: #000000;
   stroke-width: 1;
   cursor: pointer;
+  &_noclick {
+    cursor: default
+  }
 }
 .empty {
   display: inline-block;

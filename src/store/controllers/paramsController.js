@@ -110,7 +110,7 @@ export default function () {
           }
           if (!payload.data.color && payload.data.check) {
             // проверка соседних елементов
-            possiblyColor = getCommonLine(getter['params/getHexArray'], payload.data)
+            possiblyColor = getCommonLine(getter['params/getHexArray'], payload.data, getter['params/getParamM'] < getter['params/getParamL'])
             if (!possiblyColor) {
               possiblyColor = getColor()
             }
@@ -195,7 +195,6 @@ export default function () {
                   saveHexArrayAfterDelColorCurrentRow(payload.data.row)
                   break
                 case 'DIAGONAL_DOWN':
-                  console.log('DIAGONAL_DOWN')
                   break
 
             }

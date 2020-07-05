@@ -1,9 +1,9 @@
-export default function getCommonLine(array, item) {
+export default function getCommonLine(array, item, bool) {
   const currenRow = array[item.row - 1]
 
   const possiblyValues = [
-    {value: array[item.row - 2] && array[item.row - 2].find(value => value && value.index === item.index + getOffsetUp(currenRow,  array[item.row - 2]) + 1)},
-    {value: array[item.row - 2] && array[item.row - 2].find(value => value && value.index === item.index + getOffsetUp(currenRow,  array[item.row - 2]))},
+    {value: array[item.row - 2] && array[item.row - 2].find(value => value && value.index === item.index + getOffsetUp(currenRow,  array[item.row - 2], bool) + 1)},
+    {value: array[item.row - 2] && array[item.row - 2].find(value => value && value.index === item.index + getOffsetUp(currenRow,  array[item.row - 2], bool))},
     {value: array[item.row - 1].find(value => value && value.index === item.index - 1)},
     {value: array[item.row - 1].find(value => value && value.index === item.index + 1)},
     {value: array[item.row] && array[item.row].find(value => value && value.index === item.index + getOffsetDown(currenRow,  array[item.row]) - 1)},
@@ -14,8 +14,9 @@ export default function getCommonLine(array, item) {
   }
 }
 
-function getOffsetUp(array1, array2) {
+function getOffsetUp(array1, array2, bool) {
   if (array1.filter(Boolean).length > array2.filter(Boolean).length) return -1
+  if (bool && array1.filter(Boolean).length === array2.filter(Boolean).length) return -1
   return 0
 }
 

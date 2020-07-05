@@ -7,10 +7,13 @@
           Количество ячеек в решетке: <span>{{getTotalCountCells}}</span>
         </p>
         <p class="total">
-          Количество доменов (ячейки с 1): <span>{{getTotalAmountHex && getTotalAmountHex}}</span>
+          Количество выбранных ячеек: <span>{{getTotalAmountHex && getTotalAmountHex}}</span>
         </p>
         <p class="total">
-          Количество односвязных доменов(одинакового цвета): <span>{{getDiffrentDomen()}}</span>
+          Количество доменов: <span>{{totalDomen()}}</span>
+        </p>
+        <p class="total">
+          Количество односвязных доменов: <span> --- </span>
         </p>
       </div>
       <div class="hex_field">
@@ -22,6 +25,7 @@
               :key="item ? item.id : getKey()"
               :id="item && item.id"
               :item="item ? item : null"
+              :cursorPointer="getMode === 'auto'"
               @hex="clickToHex"
           />
         </div>
@@ -98,9 +102,10 @@ export default {
     getKey() {
       return cryptoRandomString({length: 5})
     },
-    getDiffrentDomen() {
+    totalDomen() {
       return Object.keys(this.getTotalHexColor).length
     },
+    
     clickToHex(item) {
       if (!item) return
       if (this.getMode === 'auto') return
@@ -146,5 +151,6 @@ export default {
 .stats {
   width: 1000px;
   margin: 0 auto;
+  margin-bottom: 50px;
 }
 </style>

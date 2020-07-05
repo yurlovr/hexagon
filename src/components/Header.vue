@@ -79,10 +79,10 @@ export default {
   box-shadow: 5px 1px 16px 0 hsla(0, 0%, 0%, 0.35);
 }
 .header_button {
-  margin-left: 20px;
+  margin-left: 50px;
   &-main {
     margin-left: 0;
-    margin-right: 20px;
+    margin-right: 50px;
   }
 }
 .header_text {

@@ -11,7 +11,7 @@
     </el-table-column>
     <el-table-column label="Количество доменов в решетке">
       <el-table-column
-        prop="diffrentDomen"
+        prop="total"
         label="Всего"
         width="124">
       </el-table-column>
